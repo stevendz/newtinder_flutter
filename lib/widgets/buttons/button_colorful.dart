@@ -22,18 +22,21 @@ class ButtonColorful extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft,
-              colors: [
-                Color(0xffFF7759),
-                Color(0xffFF427A),
-              ],
-            ),
+            color: Colors.grey.shade200,
+            gradient: onPressed != null
+                ? LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: [
+                      Color(0xffFF7759),
+                      Color(0xffFF427A),
+                    ],
+                  )
+                : null,
             borderRadius: BorderRadius.circular(50)),
         child: Text(
           title.toUpperCase(),
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
       ),
     );
