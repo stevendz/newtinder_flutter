@@ -19,7 +19,8 @@ class ButtonBorderSelector extends StatelessWidget {
       ),
       borderSide: BorderSide(
         width: 2,
-        color: value == currentValue ? Colors.red : Colors.blueGrey.shade200,
+        color:
+            value == currentValue ? Colors.redAccent : Colors.blueGrey.shade200,
       ),
       padding: EdgeInsets.all(10),
       onPressed: () {
@@ -30,8 +31,9 @@ class ButtonBorderSelector extends StatelessWidget {
           value.toUpperCase(),
           style: TextStyle(
             fontSize: 16,
-            color:
-                value == currentValue ? Colors.red : Colors.blueGrey.shade300,
+            color: value == currentValue
+                ? Colors.redAccent
+                : Colors.blueGrey.shade300,
           ),
         ),
       ),

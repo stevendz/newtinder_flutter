@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:newtinder/screens/onboarding/onboarding_enable_gps_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:newtinder/widgets/onboarding/add_photo_card.dart';
 import 'package:newtinder/widgets/onboarding/add_photo_header.dart';
@@ -93,6 +94,12 @@ class _OnboardingAddPhotosScreenState extends State<OnboardingAddPhotosScreen> {
               onPressed: isValid()
                   ? () {
                       print('valid');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OnboardingEnableGpsScreen(),
+                        ),
+                      );
                     }
                   : null,
             ),
