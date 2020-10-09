@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/screens/onboarding/onboarding_houserules_screen.dart';
 import 'package:newtinder/widgets/buttons/button_social_login.dart';
 import 'package:newtinder/widgets/logo/logo_with_text.dart';
 import 'package:provider/provider.dart';
@@ -15,15 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Provider.of<CurrentUser>(context).userUid != null
-        ? Material(
-            child: FlatButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                Provider.of<CurrentUser>(context, listen: false).setUser();
-              },
-              child: Text('Logout'),
-            ),
-          )
+        ? OnboardingHouseRulesScreen()
         : Scaffold(
             body: Container(
               width: MediaQuery.of(context).size.width,
