@@ -12,25 +12,15 @@ class ButtonSocialLogin extends StatelessWidget {
     @required this.social,
   }) : super(key: key);
 
-  String buttonText() {
-    switch (social) {
-      case 'google':
-        return 'Login with Google';
-      case 'phone':
-        return 'Login with Phonenumber';
-    }
-    return 'No Social';
-  }
+  static const Map<String, String> buttonText = {
+    'google': 'Login with Google',
+    'phone': 'Login with Phonenumber',
+  };
 
-  String buttonIcon() {
-    switch (social) {
-      case 'google':
-        return 'assets/icons/google.svg';
-      case 'phone':
-        return 'assets/icons/phone.svg';
-    }
-    return 'assets/icons/loading.svg';
-  }
+  static const Map<String, String> buttonIcon = {
+    'google': 'assets/icons/google.svg',
+    'phone': 'assets/icons/phone.svg',
+  };
 
   Future<void> onButtonPressed(context) async {
     switch (social) {
@@ -60,12 +50,12 @@ class ButtonSocialLogin extends StatelessWidget {
         child: Row(
           children: [
             SvgPicture.asset(
-              buttonIcon(),
+              buttonIcon[social],
               height: 25,
             ),
             Expanded(
               child: Text(
-                buttonText().toUpperCase(),
+                buttonText[social].toUpperCase(),
                 textAlign: TextAlign.center,
               ),
             ),
