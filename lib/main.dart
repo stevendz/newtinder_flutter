@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'provider/current_user.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
@@ -23,7 +25,8 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'newTinder',
-            home: SplashScreen(),
+            home: ChangeNotifierProvider(
+                create: (context) => CurrentUser(), child: SplashScreen()),
           );
         }
         return Material(child: Center(child: CircularProgressIndicator()));

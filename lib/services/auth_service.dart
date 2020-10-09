@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,6 +16,7 @@ class AuthService {
   }
 
   Future<void> signInWithPhone(context) async {
+    Completer<bool> completer = Completer<bool>();
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+494567890925',
       timeout: Duration(seconds: 10),
@@ -37,6 +39,7 @@ class AuthService {
                     await FirebaseAuth.instance
                         .signInWithCredential(phoneAuthCredential);
                     Navigator.pop(context);
+                    completer.complete(true);
                   },
                   child: Text('enter'),
                 ),
@@ -47,5 +50,6 @@ class AuthService {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
+    return completer.future;
   }
 }
