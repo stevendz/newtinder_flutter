@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/screens/onboarding/onboarding_add_photos_screen.dart';
 import 'package:newtinder/widgets/buttons/button_border_selector.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 
@@ -62,6 +63,12 @@ class _OnboardingGenderScreenState extends State<OnboardingGenderScreen> {
               onPressed: gender != null
                   ? () {
                       print(gender);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OnboardingAddPhotosScreen(),
+                        ),
+                      );
                     }
                   : null,
             ),
