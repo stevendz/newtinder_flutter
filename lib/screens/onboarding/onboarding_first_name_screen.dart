@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/screens/onboarding/onboarding_gender_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 
 class OnboardingFirstNameScreen extends StatefulWidget {
@@ -32,6 +33,7 @@ class _OnboardingFirstNameScreenState extends State<OnboardingFirstNameScreen> {
         padding: EdgeInsets.only(left: 35, right: 35, bottom: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'My first name is',
@@ -72,6 +74,12 @@ class _OnboardingFirstNameScreenState extends State<OnboardingFirstNameScreen> {
                   ? () {
                       if (_formKey.currentState.validate()) {
                         print('valid');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OnboardingGenderScreen(),
+                          ),
+                        );
                       }
                     }
                   : null,
