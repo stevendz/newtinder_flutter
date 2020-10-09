@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "90499878294",
+    "firebase_url": "https://newtinder-5ba54.firebaseio.com",
+    "project_id": "newtinder-5ba54",
+    "storage_bucket": "newtinder-5ba54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90499878294:android:e52c93bf9ea2fa3da921b7",
+        "android_client_info": {
+          "package_name": "de.stevendz.newtinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90499878294-gpb8s4mlct30cnqksd1uk2omsshaj87o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.stevendz.newtinder",
+            "certificate_hash": "b96781a5ce5ab1a38c32dc29e9d4898af634afc9"
+          }
+        },
+        {
+          "client_id": "90499878294-63ijqe2e9j29i8h0scmjp0kbqu9nkkk0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7DmGRgP9vPkXG7NbQbQt5FzU0sHFaWT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90499878294-63ijqe2e9j29i8h0scmjp0kbqu9nkkk0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
