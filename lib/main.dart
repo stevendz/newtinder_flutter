@@ -39,7 +39,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   User user = FirebaseAuth.instance.currentUser;
 
-  Future<UserCredential> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -47,12 +47,20 @@ class _SplashScreenState extends State<SplashScreen> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    UserCredential user =
-        await FirebaseAuth.instance.signInWithCredential(credential);
+    await FirebaseAuth.instance.signInWithCredential(credential);
     setState(() {
       this.user = FirebaseAuth.instance.currentUser;
     });
-    return user;
+  }
+
+  Future<void> signInWithPhone(verificationId) async {
+    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: '123456');
+    await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+    setState(() {
+      user = FirebaseAuth.instance.currentUser;
+    });
+    Navigator.pop(context);
   }
 
   @override
@@ -64,15 +72,50 @@ class _SplashScreenState extends State<SplashScreen> {
           children: <Widget>[
             FlatButton(
                 onPressed: signInWithGoogle, child: Text('Login with Google')),
+            FlatButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.verifyPhoneNumber(
+                  phoneNumber: '+494567890925',
+                  timeout: Duration(seconds: 10),
+                  verificationCompleted:
+                      (PhoneAuthCredential credential) async =>
+                          await FirebaseAuth.instance
+                              .signInWithCredential(credential),
+                  verificationFailed: (FirebaseAuthException error) =>
+                      print(error.toString().toUpperCase()),
+                  codeSent: (String verificationId, int resendToken) async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('enter code'),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () async {
+                                await signInWithPhone(verificationId);
+                              },
+                              child: Text('enter'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  codeAutoRetrievalTimeout: (String verificationId) {},
+                );
+              },
+              child: Text('Login with Phone'),
+            ),
             Text(user.toString()),
             FlatButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  setState(() {
-                    user = FirebaseAuth.instance.currentUser;
-                  });
-                },
-                child: Text('Logout')),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                setState(() {
+                  user = FirebaseAuth.instance.currentUser;
+                });
+              },
+              child: Text('Logout'),
+            ),
           ],
         ),
       ),
