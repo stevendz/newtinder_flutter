@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,12 +31,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  User user = FirebaseAuth.instance.currentUser;
+
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    UserCredential user =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    setState(() {
+      this.user = FirebaseAuth.instance.currentUser;
+    });
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Hello'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+                onPressed: signInWithGoogle, child: Text('Login with Google')),
+            Text(user.toString()),
+            FlatButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  setState(() {
+                    user = FirebaseAuth.instance.currentUser;
+                  });
+                },
+                child: Text('Logout')),
+          ],
+        ),
       ),
     );
   }
