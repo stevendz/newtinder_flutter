@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/provider/current_user.dart';
-import 'package:newtinder/services/auth_service.dart';
+import 'package:newtinder/widgets/buttons/button_social_login.dart';
+import 'package:newtinder/widgets/logo/logo_with_text.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,37 +14,57 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                onPressed: () async {
-                  await AuthService().signInWithGoogle();
-                  Provider.of<CurrentUser>(context, listen: false).setUser();
-                },
-                child: Text('Login with Google')),
-            FlatButton(
-              onPressed: () async {
-                await AuthService().signInWithPhone(context);
-                Provider.of<CurrentUser>(context, listen: false).setUser();
-              },
-              child: Text('Login with Phone'),
-            ),
-            Text(
-              Provider.of<CurrentUser>(context).userUid.toString(),
-            ),
-            FlatButton(
+    return Provider.of<CurrentUser>(context).userUid != null
+        ? Material(
+            child: FlatButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 Provider.of<CurrentUser>(context, listen: false).setUser();
               },
               child: Text('Logout'),
             ),
-          ],
-        ),
-      ),
-    );
+          )
+        : Scaffold(
+            body: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 35),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xffFF7759),
+                    Color(0xffFF427A),
+                  ],
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    alignment: Alignment.center,
+                    child: LogoWithText(),
+                  ),
+                  Text(
+                    'By clicking Log In, you agree to our Terms. Learn how we process your data in our Privacy Policy and Cookie Polilcy',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  ButtonSocialLogin(social: 'google'),
+                  ButtonSocialLogin(social: 'phone'),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Trouble logging in?',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
   }
 }

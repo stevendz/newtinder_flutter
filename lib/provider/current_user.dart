@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CurrentUser extends ChangeNotifier {
-  String _userUid = 'No Users';
+  String _userUid;
   String get userUid => _userUid;
 
   void setUser() {
@@ -10,7 +10,7 @@ class CurrentUser extends ChangeNotifier {
     if (user != null) {
       _userUid = user.uid;
     } else {
-      _userUid = 'No user';
+      _userUid = null;
     }
     notifyListeners();
   }
