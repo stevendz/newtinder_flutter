@@ -1,16 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/screens/home_screen.dart';
 import 'package:newtinder/screens/onboarding/onboarding_first_name_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:newtinder/widgets/onboarding/house_rule.dart';
 import 'package:newtinder/widgets/onboarding/house_rules_header.dart';
-import 'package:provider/provider.dart';
 
-class OnboardingHouseRulesScreen extends StatelessWidget {
+class OnboardingHouseRulesScreen extends StatefulWidget {
+  @override
+  _OnboardingHouseRulesScreenState createState() =>
+      _OnboardingHouseRulesScreenState();
+}
+
+class _OnboardingHouseRulesScreenState
+    extends State<OnboardingHouseRulesScreen> {
+  CollectionReference userDb = FirebaseFirestore.instance.collection("users");
+  User user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
+    if (userDb.doc(user.uid) != null) {
+      return HomeScreen();
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -23,7 +36,6 @@ class OnboardingHouseRulesScreen extends StatelessWidget {
           ),
           onPressed: () async {
             await FirebaseAuth.instance.signOut();
-            Provider.of<CurrentUser>(context, listen: false).setUser();
           },
         ),
       ),

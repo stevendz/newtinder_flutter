@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/screens/home_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingEnableGpsScreen extends StatefulWidget {
   @override
@@ -13,6 +17,7 @@ class OnboardingEnableGpsScreen extends StatefulWidget {
 class _OnboardingEnableGpsScreenState extends State<OnboardingEnableGpsScreen> {
   @override
   Widget build(BuildContext context) {
+    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -68,6 +73,21 @@ class _OnboardingEnableGpsScreenState extends State<OnboardingEnableGpsScreen> {
                 var permisson = await Permission.location.request();
                 print(permisson);
                 print(FirebaseAuth.instance.currentUser);
+                await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser.uid)
+                    .set({
+                  'username': userData.userName,
+                  'gender': userData.userGender,
+                  'avatar': FirebaseAuth.instance.currentUser.photoURL,
+                  'userPhotos': userData.userPhotos
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                );
               },
             ),
           ],

@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/screens/onboarding/onboarding_houserules_screen.dart';
 import 'package:newtinder/services/auth_service.dart';
-import 'package:provider/provider.dart';
 
 class ButtonSocialLogin extends StatelessWidget {
   final String social;
@@ -26,11 +26,25 @@ class ButtonSocialLogin extends StatelessWidget {
     switch (social) {
       case 'google':
         await AuthService().signInWithGoogle();
-        Provider.of<CurrentUser>(context, listen: false).setUser();
+        if (FirebaseAuth.instance.currentUser != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OnboardingHouseRulesScreen(),
+            ),
+          );
+        }
         break;
       case 'phone':
         await AuthService().signInWithPhone(context);
-        Provider.of<CurrentUser>(context, listen: false).setUser();
+        if (FirebaseAuth.instance.currentUser != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OnboardingHouseRulesScreen(),
+            ),
+          );
+        }
         break;
     }
   }
