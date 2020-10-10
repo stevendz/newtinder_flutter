@@ -22,7 +22,6 @@ class AddPhotoCard extends StatelessWidget {
           margin: EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            // color: Colors.grey.shade300,
           ),
           child: SvgPicture.asset(
             'assets/icons/no_image.svg',
@@ -37,7 +36,8 @@ class AddPhotoCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white70,
             image: photoPaths[index] != null
-                ? DecorationImage(image: photoPaths[index], fit: BoxFit.cover)
+                ? DecorationImage(
+                    image: AssetImage(photoPaths[index]), fit: BoxFit.cover)
                 : null,
           ),
         ),

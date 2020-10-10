@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:newtinder/provider/current_user.dart';
 import 'package:newtinder/screens/onboarding/onboarding_enable_gps_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:newtinder/widgets/onboarding/add_photo_card.dart';
 import 'package:newtinder/widgets/onboarding/add_photo_header.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingAddPhotosScreen extends StatefulWidget {
   @override
@@ -21,35 +23,11 @@ class _OnboardingAddPhotosScreenState extends State<OnboardingAddPhotosScreen> {
     null,
     null,
   ];
-
-  isValid() {
-    List validPhotos = [];
-    photoPaths.forEach((element) {
-      if (element != null) {
-        validPhotos.add(element);
-      }
-    });
-    return validPhotos.length >= 2;
-  }
-
-  setPhotoUrl(index) async {
-    try {
-      PickedFile pickedFile = await ImagePicker().getImage(
-        source: ImageSource.gallery,
-      );
-      setState(() {
-        photoPaths[index] = AssetImage(
-          pickedFile.path,
-        );
-      });
-      isValid();
-    } catch (e) {
-      print(e);
-    }
-  }
+  bool isValid = false;
 
   @override
   Widget build(BuildContext context) {
+    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -91,9 +69,9 @@ class _OnboardingAddPhotosScreenState extends State<OnboardingAddPhotosScreen> {
             ),
             ButtonColorful(
               title: 'Continue',
-              onPressed: isValid()
+              onPressed: isValid
                   ? () {
-                      print('valid');
+                      userData.userPhotos = userPhotos();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -107,5 +85,30 @@ class _OnboardingAddPhotosScreenState extends State<OnboardingAddPhotosScreen> {
         ),
       ),
     );
+  }
+
+  List<String> userPhotos() {
+    List<String> validPhotos = [];
+    photoPaths.forEach((element) {
+      if (element != null) {
+        validPhotos.add(element);
+      }
+    });
+    isValid = validPhotos.length >= 2;
+    return validPhotos;
+  }
+
+  Future<void> setPhotoUrl(index) async {
+    try {
+      PickedFile pickedFile = await ImagePicker().getImage(
+        source: ImageSource.gallery,
+      );
+      setState(() {
+        photoPaths[index] = pickedFile.path;
+      });
+      userPhotos();
+    } catch (e) {
+      print(e);
+    }
   }
 }

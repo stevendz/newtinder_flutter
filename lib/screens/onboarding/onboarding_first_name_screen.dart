@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/provider/current_user.dart';
 import 'package:newtinder/screens/onboarding/onboarding_gender_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingFirstNameScreen extends StatefulWidget {
   @override
@@ -11,9 +13,12 @@ class OnboardingFirstNameScreen extends StatefulWidget {
 
 class _OnboardingFirstNameScreenState extends State<OnboardingFirstNameScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _nameController = TextEditingController();
   bool isValid = false;
+
   @override
   Widget build(BuildContext context) {
+    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -44,6 +49,7 @@ class _OnboardingFirstNameScreenState extends State<OnboardingFirstNameScreen> {
                 Form(
                   key: _formKey,
                   child: TextFormField(
+                    controller: _nameController,
                     validator: (value) {
                       if (value.length < 3) {
                         return 'Please enter your name';
@@ -73,7 +79,7 @@ class _OnboardingFirstNameScreenState extends State<OnboardingFirstNameScreen> {
               onPressed: isValid
                   ? () {
                       if (_formKey.currentState.validate()) {
-                        print('valid');
+                        userData.userName = _nameController.text;
                         Navigator.push(
                           context,
                           MaterialPageRoute(

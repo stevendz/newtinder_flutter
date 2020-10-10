@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
@@ -64,8 +65,9 @@ class _OnboardingEnableGpsScreenState extends State<OnboardingEnableGpsScreen> {
             ButtonColorful(
               title: 'Allow location',
               onPressed: () async {
-                print('valid');
-                await Permission.location.request();
+                var permisson = await Permission.location.request();
+                print(permisson);
+                print(FirebaseAuth.instance.currentUser);
               },
             ),
           ],

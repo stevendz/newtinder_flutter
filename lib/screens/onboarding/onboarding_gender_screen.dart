@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/provider/current_user.dart';
 import 'package:newtinder/screens/onboarding/onboarding_add_photos_screen.dart';
 import 'package:newtinder/widgets/buttons/button_border_selector.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingGenderScreen extends StatefulWidget {
   @override
@@ -11,14 +13,10 @@ class OnboardingGenderScreen extends StatefulWidget {
 
 class _OnboardingGenderScreenState extends State<OnboardingGenderScreen> {
   String gender;
-  setGender(newGender) {
-    setState(() {
-      gender = newGender;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -62,7 +60,7 @@ class _OnboardingGenderScreenState extends State<OnboardingGenderScreen> {
               title: 'Continue',
               onPressed: gender != null
                   ? () {
-                      print(gender);
+                      userData.userGender = gender;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -76,5 +74,11 @@ class _OnboardingGenderScreenState extends State<OnboardingGenderScreen> {
         ),
       ),
     );
+  }
+
+  void setGender(newGender) {
+    setState(() {
+      gender = newGender;
+    });
   }
 }

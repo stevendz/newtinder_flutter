@@ -7,7 +7,10 @@ import 'screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => CurrentUser(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,8 +28,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'newTinder',
-            home: ChangeNotifierProvider(
-                create: (context) => CurrentUser(), child: SplashScreen()),
+            home: SplashScreen(),
           );
         }
         return Material(child: Center(child: CircularProgressIndicator()));
