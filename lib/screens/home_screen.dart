@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:newtinder/screens/user/profile_screen.dart';
+import 'package:newtinder/screens/user/swipe_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,8 +15,8 @@ class _HomeScreenState extends State<HomeScreen>
   CollectionReference userDb = FirebaseFirestore.instance.collection("users");
   User user = FirebaseAuth.instance.currentUser;
   TabController _tabController;
-  var screens = [
-    Center(child: Text('1')),
+  List<Widget> screens = [
+    SwipeScreen(),
     Center(child: Text('2')),
     Center(child: Text('3')),
     ProfileScreen(),
@@ -39,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen>
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: TabBarView(controller: _tabController, children: screens),
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: screens,
+        ),
       ),
     );
   }
