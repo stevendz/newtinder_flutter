@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:newtinder/widgets/profile/tinder_gold/get_tinder_gold_page_indicator.dart';
 import 'package:newtinder/widgets/profile/tinder_gold/get_tinder_gold_slider.dart';
 
-class GetTinderGold extends StatelessWidget {
+class GetTinderGold extends StatefulWidget {
   const GetTinderGold({
     Key key,
   }) : super(key: key);
+
+  @override
+  _GetTinderGoldState createState() => _GetTinderGoldState();
+}
+
+class _GetTinderGoldState extends State<GetTinderGold> {
+  bool getTinderGold = true;
+  int currentIndex = 0;
+
+  void getCurrentIndex(newIndex) {
+    if (newIndex == 1 || newIndex == 4) getTinderGold = false;
+    if (newIndex == 0) getTinderGold = true;
+    currentIndex = newIndex;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         children: [
-          GetTinderGoldSlider(),
+          GetTinderGoldSlider(getCurrentIndex: getCurrentIndex),
+          GetTinderGoldPageIndicator(currentIndex: currentIndex),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: RawMaterialButton(
@@ -22,8 +39,14 @@ class GetTinderGold extends StatelessWidget {
               fillColor: Colors.white,
               onPressed: () {},
               child: Text(
-                'Get tinder gold™'.toUpperCase(),
-                style: TextStyle(color: Colors.amberAccent.shade400),
+                getTinderGold
+                    ? 'Get tinder gold™'.toUpperCase()
+                    : 'My tinder plus®'.toUpperCase(),
+                style: TextStyle(
+                  color: getTinderGold
+                      ? Colors.amberAccent.shade400
+                      : Colors.redAccent,
+                ),
               ),
             ),
           ),

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:newtinder/widgets/profile/tinder_gold/get_tinder_gold_slide.dart';
 
 class GetTinderGoldSlider extends StatelessWidget {
+  final Function getCurrentIndex;
   const GetTinderGoldSlider({
     Key key,
+    this.getCurrentIndex,
   }) : super(key: key);
 
   @override
@@ -14,9 +16,9 @@ class GetTinderGoldSlider extends StatelessWidget {
         options: CarouselOptions(
           viewportFraction: 1,
           height: double.infinity,
-          // onPageChanged: (index, reason) {
-          //   print(index);
-          // },
+          onPageChanged: (index, reason) {
+            getCurrentIndex(index);
+          },
           autoPlay: true,
         ),
         items: [

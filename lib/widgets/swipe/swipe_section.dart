@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:newtinder/screens/card/swipeable_card.dart';
 import 'package:newtinder/screens/card/swipeable_widget.dart';
 
 class SwipeSection extends StatelessWidget {
-  final cards;
-  final cardController;
-  final currentCardIndex;
+  final List<SwipeableCard> cards;
+  final SwipeableWidgetController cardController;
+  final int currentCardIndex;
   final Function swipeLeft;
   final Function swipeRight;
 
@@ -31,8 +32,8 @@ class SwipeSection extends StatelessWidget {
               child: cards[currentCardIndex + 1],
             ),
         ],
-        onLeftSwipe: () => swipeLeft(),
-        onRightSwipe: () => swipeRight(),
+        onLeftSwipe: swipeLeft,
+        onRightSwipe: swipeRight,
       );
     } else {
       return Expanded(
