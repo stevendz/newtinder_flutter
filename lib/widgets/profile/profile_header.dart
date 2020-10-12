@@ -18,7 +18,9 @@ class ProfileHeader extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 75,
-              backgroundImage: NetworkImage(userData['profilePic']),
+              backgroundImage: NetworkImage(userData['profilePic'] != null
+                  ? userData['profilePic']
+                  : userData['userPhotos'][0]),
             ),
             FloatingActionButton(
               backgroundColor: Colors.white,

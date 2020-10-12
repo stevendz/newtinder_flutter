@@ -70,9 +70,7 @@ class _OnboardingEnableGpsScreenState extends State<OnboardingEnableGpsScreen> {
             ButtonColorful(
               title: 'Allow location',
               onPressed: () async {
-                var permisson = await Permission.location.request();
-                print(permisson);
-                print(FirebaseAuth.instance.currentUser);
+                await Permission.location.request();
                 await FirebaseFirestore.instance
                     .collection('users')
                     .doc(FirebaseAuth.instance.currentUser.uid)

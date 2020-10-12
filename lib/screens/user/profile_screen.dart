@@ -20,14 +20,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   User user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<DocumentSnapshot>(
       stream: userDb.doc(user.uid).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
         if (snapshot.hasData) {
-          var userData = snapshot.data.data();
+          Map<String, dynamic> userData = snapshot.data.data();
           return Column(
             children: [
               ClipShadowPath(

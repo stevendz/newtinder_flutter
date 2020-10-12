@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newtinder/screens/home_screen.dart';
 import 'package:newtinder/screens/onboarding/onboarding_houserules_screen.dart';
 import 'package:newtinder/services/auth_service.dart';
 
-class ButtonSocialLogin extends StatelessWidget {
+class ButtonSocialLogin extends StatefulWidget {
   final String social;
   const ButtonSocialLogin({
     Key key,
@@ -22,30 +24,37 @@ class ButtonSocialLogin extends StatelessWidget {
     'phone': 'assets/icons/phone.svg',
   };
 
+  @override
+  _ButtonSocialLoginState createState() => _ButtonSocialLoginState();
+}
+
+class _ButtonSocialLoginState extends State<ButtonSocialLogin> {
+  CollectionReference userDb = FirebaseFirestore.instance.collection("users");
+
   Future<void> onButtonPressed(context) async {
-    switch (social) {
+    switch (widget.social) {
       case 'google':
         await AuthService().signInWithGoogle();
-        if (FirebaseAuth.instance.currentUser != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OnboardingHouseRulesScreen(),
-            ),
-          );
-        }
+        forwardWithUser();
         break;
       case 'phone':
         await AuthService().signInWithPhone(context);
-        if (FirebaseAuth.instance.currentUser != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OnboardingHouseRulesScreen(),
-            ),
-          );
-        }
+        forwardWithUser();
         break;
+    }
+  }
+
+  Future<void> forwardWithUser() async {
+    if (FirebaseAuth.instance.currentUser != null) {
+      DocumentSnapshot data =
+          await userDb.doc(FirebaseAuth.instance.currentUser.uid).get();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              data.exists ? HomeScreen() : OnboardingHouseRulesScreen(),
+        ),
+      );
     }
   }
 
@@ -64,12 +73,12 @@ class ButtonSocialLogin extends StatelessWidget {
         child: Row(
           children: [
             SvgPicture.asset(
-              buttonIcon[social],
+              ButtonSocialLogin.buttonIcon[widget.social],
               height: 25,
             ),
             Expanded(
               child: Text(
-                buttonText[social].toUpperCase(),
+                ButtonSocialLogin.buttonText[widget.social].toUpperCase(),
                 textAlign: TextAlign.center,
               ),
             ),
