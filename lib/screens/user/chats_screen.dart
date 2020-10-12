@@ -28,10 +28,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
               return FlatButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ChatScreen(chatId: data[0].id)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatScreen(chatId: data[0].id),
+                      ),
+                    );
                   },
                   child: Text(data[0].id));
             },
