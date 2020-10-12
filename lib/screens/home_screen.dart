@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newtinder/screens/user/chats_screen.dart';
 import 'package:newtinder/screens/user/profile_screen.dart';
 import 'package:newtinder/screens/user/swipe_screen.dart';
 
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<Widget> screens = [
     SwipeScreen(),
     Center(child: Text('2')),
-    Center(child: Text('3')),
+    ChatsScreen(),
     ProfileScreen(),
   ];
   @override

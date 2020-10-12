@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newtinder/screens/card/swipeable_card.dart';
-import 'package:newtinder/screens/card/swipeable_widget.dart';
+import 'package:newtinder/card/swipeable_card.dart';
+import 'package:newtinder/card/swipeable_widget.dart';
 import 'package:newtinder/widgets/swipe/swipe_actions_row.dart';
 import 'package:newtinder/widgets/swipe/swipe_section.dart';
 

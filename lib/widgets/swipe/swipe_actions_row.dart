@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newtinder/screens/card/swipeable_widget.dart';
+import 'package:newtinder/card/swipeable_widget.dart';
 import 'package:newtinder/widgets/buttons/button_swipe_action.dart';
 
 class SwipeActionsRow extends StatelessWidget {
