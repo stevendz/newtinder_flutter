@@ -32,20 +32,12 @@ class _SwipeScreenState extends State<SwipeScreen> {
         }
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> userData = snapshot.data.docs.toList();
-          if (cards.isEmpty)
-            userData.forEach((element) {
-              cards.add(
-                SwipeableCard(
-                  image: element.data()['profilePic'],
-                  text: element.data()['username'],
-                ),
-              );
-            });
+
           return SafeArea(
             child: Column(
               children: [
                 SwipeSection(
-                  cards: cards,
+                  userData: userData,
                   cardController: _cardController,
                   currentCardIndex: currentCardIndex,
                   swipeLeft: swipeLeft,
@@ -64,15 +56,19 @@ class _SwipeScreenState extends State<SwipeScreen> {
     );
   }
 
-  void swipeLeft() {
+  void swipeLeft(uid) {
     print("card swiped to the left");
+    print(uid);
     setState(() {
       currentCardIndex++;
     });
   }
 
-  void swipeRight() {
+  void swipeRight(uid) {
     print("card swiped to the right");
+    userDb.doc(user.uid).update({
+      'likes': FieldValue.arrayUnion([uid])
+    });
     setState(() {
       currentCardIndex++;
     });

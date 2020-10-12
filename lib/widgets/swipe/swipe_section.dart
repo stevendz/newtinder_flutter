@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/screens/card/swipeable_card.dart';
 import 'package:newtinder/screens/card/swipeable_widget.dart';
 
-class SwipeSection extends StatelessWidget {
-  final List<SwipeableCard> cards;
+class SwipeSection extends StatefulWidget {
+  final List<QueryDocumentSnapshot> userData;
   final SwipeableWidgetController cardController;
   final int currentCardIndex;
   final Function swipeLeft;
@@ -11,29 +12,51 @@ class SwipeSection extends StatelessWidget {
 
   const SwipeSection(
       {Key key,
-      this.cards,
+      this.userData,
       this.cardController,
       this.currentCardIndex,
       this.swipeLeft,
       this.swipeRight})
       : super(key: key);
+
+  @override
+  _SwipeSectionState createState() => _SwipeSectionState();
+}
+
+class _SwipeSectionState extends State<SwipeSection> {
+  List<SwipeableCard> cards = [];
   @override
   Widget build(BuildContext context) {
-    if (currentCardIndex < cards.length) {
+    if (cards.isEmpty)
+      widget.userData.forEach(
+        (element) {
+          cards.add(
+            SwipeableCard(
+              image: element.data()['profilePic'],
+              text: element.data()['username'],
+            ),
+          );
+        },
+      );
+    if (widget.currentCardIndex < cards.length) {
       return SwipeableWidget(
-        cardController: cardController,
+        cardController: widget.cardController,
         animationDuration: 500,
         horizontalThreshold: 0.85,
-        child: cards[currentCardIndex],
+        child: cards[widget.currentCardIndex],
         nextCards: <Widget>[
-          if (!(currentCardIndex + 1 >= cards.length))
+          if (!(widget.currentCardIndex + 1 >= cards.length))
             Align(
               alignment: Alignment.center,
-              child: cards[currentCardIndex + 1],
+              child: cards[widget.currentCardIndex + 1],
             ),
         ],
-        onLeftSwipe: swipeLeft,
-        onRightSwipe: swipeRight,
+        onLeftSwipe: () {
+          widget.swipeLeft(widget.userData[widget.currentCardIndex].id);
+        },
+        onRightSwipe: () {
+          widget.swipeRight(widget.userData[widget.currentCardIndex].id);
+        },
       );
     } else {
       return Expanded(

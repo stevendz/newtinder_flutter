@@ -78,7 +78,8 @@ class _OnboardingEnableGpsScreenState extends State<OnboardingEnableGpsScreen> {
                   'username': userData.userName,
                   'gender': userData.userGender,
                   'profilePic': FirebaseAuth.instance.currentUser.photoURL,
-                  'userPhotos': userData.userPhotos
+                  'userPhotos': userData.userPhotos,
+                  'likes': [],
                 });
                 Navigator.push(
                   context,
