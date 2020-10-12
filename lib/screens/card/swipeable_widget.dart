@@ -145,17 +145,13 @@ class _SwipeableWidgetState extends State<SwipeableWidget>
         then = widget.onTopSwipe;
         break;
       default:
-        //TODO: implement top and bottom (vertical)
-        //should go to top or bottom
         then = () {};
         break;
     }
-    // setting direction in which card is animating too
     _dir = dir;
     _controller.stop();
     _controller.value = 0.0;
 
-    // once the animation is over, execute the function
     _controller.forward().then((value) => then());
   }
 
@@ -192,8 +188,7 @@ Animation<Alignment> cardDismissAlignmentAnimation(
     x = startAlign.x - 18.0;
     y = startAlign.y + 0.2;
   } else if (dir == Direction.top || startAlign.y > 0) {
-    // TODO: implement top and bottom
-    // by default, take to left (the code shouldn't reach here)
+    // print("TOP, $dir");
     x = startAlign.x + 0.2;
     y = startAlign.y + 18.0;
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CardExample extends StatelessWidget {
-  const CardExample({
+class SwipeableCard extends StatelessWidget {
+  const SwipeableCard({
     Key key,
     this.image,
     this.text,
@@ -12,6 +12,7 @@ class CardExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.bottomLeft,
       height: MediaQuery.of(context).size.width * 1.25,
       width: MediaQuery.of(context).size.width * 0.95,
       padding: EdgeInsets.all(10),
@@ -22,7 +23,7 @@ class CardExample extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 36.0,
+          fontSize: 30,
           color: Colors.white,
           shadows: [Shadow(blurRadius: 10, color: Colors.blueGrey.shade800)],
           fontWeight: FontWeight.w900,
