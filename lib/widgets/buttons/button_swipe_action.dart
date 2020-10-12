@@ -16,16 +16,19 @@ class ButtonSwipeAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      mini: !big,
-      backgroundColor: Colors.white,
-      elevation: 2,
-      child: SvgPicture.asset(
-        'assets/icons/$icon.svg',
-        height: big ? (icon == 'heart' ? 30 : 25) : 20,
-        color: color,
+    return Opacity(
+      opacity: onPressed != null ? 1 : 0,
+      child: FloatingActionButton(
+        mini: !big,
+        backgroundColor: Colors.white,
+        elevation: 2,
+        child: SvgPicture.asset(
+          'assets/icons/$icon.svg',
+          height: big ? (icon == 'heart' ? 30 : 25) : 20,
+          color: color,
+        ),
+        onPressed: onPressed,
       ),
-      onPressed: onPressed,
     );
   }
 }
