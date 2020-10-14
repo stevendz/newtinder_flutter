@@ -2,13 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'provider/current_user.dart';
+import 'provider/onboarding_user.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(ChangeNotifierProvider(
-    create: (context) => CurrentUser(),
+    create: (context) => OnboardingUser(),
     child: MyApp(),
   ));
 }

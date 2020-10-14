@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/provider/onboarding_user.dart';
 import 'package:newtinder/screens/onboarding/onboarding_add_photos_screen.dart';
 import 'package:newtinder/widgets/buttons/button_border_selector.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
@@ -16,7 +16,8 @@ class _OnboardingGenderScreenState extends State<OnboardingGenderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
+    OnboardingUser userData =
+        Provider.of<OnboardingUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

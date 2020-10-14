@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/provider/onboarding_user.dart';
 import 'package:newtinder/screens/onboarding/onboarding_enable_gps_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:newtinder/widgets/onboarding/add_photo_card.dart';
@@ -27,7 +27,8 @@ class _OnboardingAddPhotosScreenState extends State<OnboardingAddPhotosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
+    OnboardingUser userData =
+        Provider.of<OnboardingUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

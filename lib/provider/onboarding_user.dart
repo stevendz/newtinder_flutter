@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CurrentUser extends ChangeNotifier {
+class OnboardingUser extends ChangeNotifier {
   String _userName;
   String _userGender;
   List<String> _userPhotos = [];

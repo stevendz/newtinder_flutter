@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:newtinder/provider/current_user.dart';
+import 'package:newtinder/provider/onboarding_user.dart';
 import 'package:newtinder/screens/home_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,7 +17,8 @@ class OnboardingEnableGpsScreen extends StatefulWidget {
 class _OnboardingEnableGpsScreenState extends State<OnboardingEnableGpsScreen> {
   @override
   Widget build(BuildContext context) {
-    CurrentUser userData = Provider.of<CurrentUser>(context, listen: false);
+    OnboardingUser userData =
+        Provider.of<OnboardingUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
