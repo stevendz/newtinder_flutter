@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/card/swipeable_card.dart';
 import 'package:newtinder/card/swipeable_widget.dart';
-import 'package:newtinder/screens/user/chat_screen.dart';
+import 'package:newtinder/widgets/swipe/match_dialog.dart';
 import 'package:newtinder/widgets/swipe/swipe_actions_row.dart';
 import 'package:newtinder/widgets/swipe/swipe_section.dart';
 
@@ -65,7 +65,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
     });
   }
 
-  void swipeRight(uid) async {
+  void swipeRight({String uid}) async {
     userDb.doc(user.uid).update({
       'likes': FieldValue.arrayUnion([uid])
     });
@@ -84,29 +84,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: Text('Match'),
-            content: Text(possibleMatch.data()['username']),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  chatsDb.add({
-                    'members': [user.uid, uid]
-                  }).then(
-                    (value) => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatScreen(
-                          chatId: value.id,
-                          chatPartnerUid: uid,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                child: Text('Say hello'),
-              ),
-            ],
+          return MatchDialog(
+            chatsDb: chatsDb,
+            user: user,
+            matchUid: uid,
           );
         },
       );

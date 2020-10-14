@@ -55,7 +55,7 @@ class _SwipeSectionState extends State<SwipeSection> {
           widget.swipeLeft(widget.userData[widget.currentCardIndex].id);
         },
         onRightSwipe: () {
-          widget.swipeRight(widget.userData[widget.currentCardIndex].id);
+          widget.swipeRight(uid: widget.userData[widget.currentCardIndex].id);
         },
       );
     } else {
