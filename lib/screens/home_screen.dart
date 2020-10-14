@@ -7,6 +7,9 @@ import 'package:newtinder/screens/user/profile_screen.dart';
 import 'package:newtinder/screens/user/swipe_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  final index;
+
+  const HomeScreen({Key key, this.index = 0}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -25,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: screens.length);
+    _tabController = TabController(
+        vsync: this, length: screens.length, initialIndex: widget.index);
   }
 
   @override
@@ -63,7 +67,13 @@ class TopNavigationBar extends StatefulWidget {
 }
 
 class _TopNavigationBarState extends State<TopNavigationBar> {
-  int currentIndex = 0;
+  int currentIndex;
+
+  @override
+  void initState() {
+    currentIndex = widget.tabController.index;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

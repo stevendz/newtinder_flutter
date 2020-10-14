@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/screens/home_screen.dart';
 import 'package:newtinder/widgets/chat/chat_message_bubble.dart';
 import 'package:newtinder/widgets/chat/message_input_field.dart';
 
@@ -24,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
   CollectionReference chatsDb = FirebaseFirestore.instance.collection('chats');
   ScrollController messagesController = ScrollController();
   TextEditingController messageController = TextEditingController();
-  bool showScrollDownButton = true;
+  bool showScrollDownButton = false;
   User user = FirebaseAuth.instance.currentUser;
   String chatPartnerImage = 'https://i.gifer.com/VLGA.gif';
 
@@ -55,7 +56,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     color: Colors.redAccent,
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreen(index: 2)));
                   }),
               centerTitle: true,
               title: Text(
