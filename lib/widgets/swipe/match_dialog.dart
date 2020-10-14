@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/screens/user/chat_screen.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
 import 'package:newtinder/widgets/buttons/button_colorful_border.dart';
@@ -23,8 +24,6 @@ class MatchDialog extends StatefulWidget {
 }
 
 class _MatchDialogState extends State<MatchDialog> {
-  CollectionReference usersDb = FirebaseFirestore.instance.collection("users");
-  User user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -72,7 +71,7 @@ class _MatchDialogState extends State<MatchDialog> {
                   ButtonColorfulBorder(
                     title: 'Keep swiping',
                     onPressed: () {
-                      print('keep swiping');
+                      Navigator.pop(context);
                     },
                   ),
                 ],
@@ -85,7 +84,7 @@ class _MatchDialogState extends State<MatchDialog> {
     );
   }
 
-  void contactMatch() async {
+  Future<void> contactMatch() async {
     DocumentReference chat = await widget.chatsDb.add({
       'members': [widget.user.uid, widget.matchUid]
     });

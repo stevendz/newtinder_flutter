@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/screens/user/chat_screen.dart';
 
 class ChatListTile extends StatefulWidget {
@@ -19,7 +20,6 @@ class ChatListTile extends StatefulWidget {
 }
 
 class _ChatListTileState extends State<ChatListTile> {
-  CollectionReference usersDb = FirebaseFirestore.instance.collection('users');
   String chatPartnerUid;
 
   @override

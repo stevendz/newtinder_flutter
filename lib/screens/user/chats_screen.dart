@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/chat/chat_list_tile.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -9,9 +9,6 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  CollectionReference chatsDb = FirebaseFirestore.instance.collection('chats');
-  User user = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/clipper/circular_clipper.dart';
 import 'package:newtinder/widgets/profile/profile_header.dart';
 import 'package:newtinder/widgets/profile/profile_settings_row.dart';
@@ -16,12 +16,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  CollectionReference userDb = FirebaseFirestore.instance.collection("users");
-  User user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: userDb.doc(user.uid).snapshots(),
+      stream: usersDb.doc(user.uid).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");

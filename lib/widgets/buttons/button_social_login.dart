@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/screens/home_screen.dart';
 import 'package:newtinder/screens/onboarding/onboarding_houserules_screen.dart';
 import 'package:newtinder/services/auth_service.dart';
@@ -29,8 +30,6 @@ class ButtonSocialLogin extends StatefulWidget {
 }
 
 class _ButtonSocialLoginState extends State<ButtonSocialLogin> {
-  CollectionReference userDb = FirebaseFirestore.instance.collection("users");
-
   Future<void> onButtonPressed(context) async {
     switch (widget.social) {
       case 'google':
@@ -47,7 +46,7 @@ class _ButtonSocialLoginState extends State<ButtonSocialLogin> {
   Future<void> forwardWithUser() async {
     if (FirebaseAuth.instance.currentUser != null) {
       DocumentSnapshot data =
-          await userDb.doc(FirebaseAuth.instance.currentUser.uid).get();
+          await usersDb.doc(FirebaseAuth.instance.currentUser.uid).get();
       Navigator.push(
         context,
         MaterialPageRoute(

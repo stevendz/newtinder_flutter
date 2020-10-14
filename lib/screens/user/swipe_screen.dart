@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/card/swipeable_card.dart';
 import 'package:newtinder/card/swipeable_widget.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/swipe/match_dialog.dart';
 import 'package:newtinder/widgets/swipe/swipe_actions_row.dart';
 import 'package:newtinder/widgets/swipe/swipe_section.dart';
@@ -19,15 +19,12 @@ class SwipeScreen extends StatefulWidget {
 final List<SwipeableCard> cards = [];
 
 class _SwipeScreenState extends State<SwipeScreen> {
-  CollectionReference chatsDb = FirebaseFirestore.instance.collection("chats");
-  CollectionReference userDb = FirebaseFirestore.instance.collection("users");
   SwipeableWidgetController _cardController = SwipeableWidgetController();
-  User user = FirebaseAuth.instance.currentUser;
   int currentCardIndex = 0;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: userDb.snapshots(),
+      stream: usersDb.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");
@@ -65,11 +62,11 @@ class _SwipeScreenState extends State<SwipeScreen> {
     });
   }
 
-  void swipeRight({String uid}) async {
-    userDb.doc(user.uid).update({
+  Future<void> swipeRight({String uid}) async {
+    usersDb.doc(user.uid).update({
       'likes': FieldValue.arrayUnion([uid])
     });
-    DocumentSnapshot possibleMatch = await userDb.doc(uid).get();
+    DocumentSnapshot possibleMatch = await usersDb.doc(uid).get();
     bool match;
     if (possibleMatch.data()['likes'].length != null)
       match = possibleMatch.data()['likes'].any((like) {

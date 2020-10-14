@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,9 +15,6 @@ class OnboardingHouseRulesScreen extends StatefulWidget {
 
 class _OnboardingHouseRulesScreenState
     extends State<OnboardingHouseRulesScreen> {
-  CollectionReference userDb = FirebaseFirestore.instance.collection("users");
-  User user = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
