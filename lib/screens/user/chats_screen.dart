@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newtinder/screens/user/chat_screen.dart';
+import 'package:newtinder/widgets/chat/chat_list_tile.dart';
 
 class ChatsScreen extends StatefulWidget {
   @override
@@ -21,29 +21,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
           return Text("Something went wrong");
         }
         if (snapshot.hasData) {
-          List<QueryDocumentSnapshot> data = snapshot.data.docs.toList();
-
+          List<QueryDocumentSnapshot> chats = snapshot.data.docs.toList();
           return ListView.builder(
-            itemCount: data.length,
+            itemCount: chats.length,
             itemBuilder: (context, index) {
-              String chatPartnerUid;
-              data[0].data()['members'].toList().forEach((uid) {
-                if (uid != null && uid != user.uid) chatPartnerUid = uid;
-              });
-              print(chatPartnerUid);
-              return FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatScreen(
-                        chatId: data[0].id,
-                        chatPartnerUid: chatPartnerUid,
-                      ),
-                    ),
-                  );
-                },
-                child: Text(data[0].id),
+              return ChatListTile(
+                data: chats,
+                user: user,
+                index: index,
               );
             },
           );
