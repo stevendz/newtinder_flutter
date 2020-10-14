@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class MessageInputField extends StatelessWidget {
+  final TextEditingController messageController;
+  final Function sendMessage;
   const MessageInputField({
     Key key,
     @required this.messageController,
+    @required this.sendMessage,
   }) : super(key: key);
-
-  final TextEditingController messageController;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,7 @@ class MessageInputField extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.send),
-            onPressed: () {
-              print(messageController.text);
-            },
+            onPressed: sendMessage,
           ),
         ],
       ),

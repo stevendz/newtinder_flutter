@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,14 @@ import 'package:newtinder/widgets/chat/chat_message_bubble.dart';
 import 'package:newtinder/widgets/chat/message_input_field.dart';
 
 class ChatScreen extends StatefulWidget {
-  final chatId;
+  final String chatId;
+  final String chatPartnerUid;
 
-  const ChatScreen({Key key, this.chatId}) : super(key: key);
+  const ChatScreen({
+    Key key,
+    this.chatId,
+    this.chatPartnerUid,
+  }) : super(key: key);
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -26,18 +30,21 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot>(
-      stream: chatsDb.doc(widget.chatId).snapshots(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: chatsDb
+          .doc(widget.chatId)
+          .collection('messages')
+          .orderBy('timestamp', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
         if (snapshot.hasData) {
-          Map<String, dynamic> data = snapshot.data.data();
+          List<QueryDocumentSnapshot> messages = snapshot.data.docs.toList();
           if (chatPartnerImage == 'https://i.gifer.com/VLGA.gif') {
-            fetchChatPartnerImage(data);
+            fetchChatPartnerImage();
           }
-          List messages = data['messages'];
 
           return Scaffold(
             appBar: AppBar(
@@ -80,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   onPressed: () {
                     messagesController
-                        .jumpTo(messagesController.position.maxScrollExtent);
+                        .jumpTo(messagesController.position.minScrollExtent);
                   },
                 ),
               ),
@@ -91,13 +98,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: NotificationListener<ScrollUpdateNotification>(
                     onNotification: (notification) {
                       setState(() {
-                        showScrollDownButton =
-                            messagesController.position.maxScrollExtent >
-                                notification.metrics.pixels;
+                        showScrollDownButton = notification.metrics.pixels > 25;
                       });
                       return null;
                     },
                     child: ListView.builder(
+                      reverse: true,
                       controller: messagesController,
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
@@ -111,7 +117,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                MessageInputField(messageController: messageController),
+                MessageInputField(
+                  messageController: messageController,
+                  sendMessage: sendMessage,
+                ),
               ],
             ),
           );
@@ -121,14 +130,20 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<void> fetchChatPartnerImage(data) async {
-    String chatPartnerUid;
-    data['members'].forEach((member) {
-      if (member != user.uid) chatPartnerUid = member;
-    });
-    DocumentSnapshot chatPartnerData = await usersDb.doc(chatPartnerUid).get();
+  Future<void> fetchChatPartnerImage() async {
+    DocumentSnapshot chatPartnerData =
+        await usersDb.doc(widget.chatPartnerUid).get();
     setState(() {
       chatPartnerImage = chatPartnerData.data()['profilePic'];
+    });
+  }
+
+  Future<void> sendMessage() async {
+    messageController.text;
+    chatsDb.doc(widget.chatId).collection('messages').add({
+      'message': messageController.text,
+      'sender': user.uid,
+      'timestamp': DateTime.now().millisecondsSinceEpoch
     });
   }
 }

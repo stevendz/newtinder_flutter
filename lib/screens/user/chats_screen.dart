@@ -22,19 +22,29 @@ class _ChatsScreenState extends State<ChatsScreen> {
         }
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> data = snapshot.data.docs.toList();
+
           return ListView.builder(
             itemCount: data.length,
             itemBuilder: (context, index) {
+              String chatPartnerUid;
+              data[0].data()['members'].toList().forEach((uid) {
+                if (uid != null && uid != user.uid) chatPartnerUid = uid;
+              });
+              print(chatPartnerUid);
               return FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatScreen(chatId: data[0].id),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatScreen(
+                        chatId: data[0].id,
+                        chatPartnerUid: chatPartnerUid,
                       ),
-                    );
-                  },
-                  child: Text(data[0].id));
+                    ),
+                  );
+                },
+                child: Text(data[0].id),
+              );
             },
           );
         }
