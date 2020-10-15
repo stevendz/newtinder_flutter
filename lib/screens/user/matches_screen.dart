@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/constants.dart';
-import 'package:newtinder/widgets/buttons/button_colorful.dart';
+import 'package:newtinder/widgets/match/get_tinder_gold_button.dart';
 import 'package:newtinder/widgets/match/match_card.dart';
 
 class MatchesScreen extends StatefulWidget {
@@ -68,29 +68,8 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   ),
                 ],
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.2,
-                      vertical: 20,
-                    ),
-                    child: ButtonColorful(
-                      onPressed: () {
-                        setState(() {
-                          isTinderGold = !isTinderGold;
-                        });
-                      },
-                      title: 'See who likes you',
-                      elevation: 2,
-                      colors: [
-                        tinderGold,
-                        tinderGoldLight,
-                      ],
-                    ),
-                  ),
-                ],
+              GetTinderGoldButton(
+                toggleTinderGold: toggleTinderGold,
               )
             ],
           );
@@ -98,5 +77,11 @@ class _MatchesScreenState extends State<MatchesScreen> {
         return Material(child: Center(child: CircularProgressIndicator()));
       },
     );
+  }
+
+  void toggleTinderGold() {
+    setState(() {
+      isTinderGold = !isTinderGold;
+    });
   }
 }

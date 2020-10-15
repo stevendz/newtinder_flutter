@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:newtinder/constants.dart';
+import 'package:newtinder/widgets/home/badge.dart';
 
 class TopNavigationBar extends StatefulWidget {
   final TabController tabController;
@@ -24,68 +26,89 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      elevation: 3,
-      currentIndex: currentIndex,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      onTap: (value) {
-        setState(() {
-          currentIndex = value;
-        });
-        widget.tabController.animateTo(value);
+    return StreamBuilder<QuerySnapshot>(
+      stream: usersDb.where('likes', arrayContains: user.uid).snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+        if (snapshot.hasData) {
+          List<QueryDocumentSnapshot> users = snapshot.data.docs.toList();
+          int likes = users.length;
+
+          return BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            elevation: 3,
+            currentIndex: currentIndex,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            onTap: (value) {
+              setState(() {
+                currentIndex = value;
+              });
+              widget.tabController.animateTo(value);
+            },
+            items: [
+              buildNavigationItem(
+                icon: 'logo',
+                color: tinderRed,
+              ),
+              buildNavigationItem(
+                value: likes,
+                icon: 'diamond',
+                color: tinderGoldLight,
+              ),
+              buildNavigationItem(
+                icon: 'chat',
+                color: tinderRed,
+              ),
+              buildNavigationItem(
+                icon: 'user',
+                color: tinderRed,
+              ),
+            ],
+          );
+        }
+        return Material(child: Center(child: CircularProgressIndicator()));
       },
-      items: [
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/logo.svg',
-              color: Colors.blueGrey.shade200,
-              height: 25,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/icons/logo.svg',
-              height: 25,
-            ),
-            label: '1'),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/diamond.svg',
-              color: Colors.blueGrey.shade200,
-              height: 25,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/icons/diamond.svg',
-              height: 25,
-              color: tinderRed,
-            ),
-            label: '1'),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/chat.svg',
-              color: Colors.blueGrey.shade200,
-              height: 25,
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/icons/chat.svg',
-              height: 25,
-              color: tinderRed,
-            ),
-            label: '1'),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/user.svg',
-            color: Colors.blueGrey.shade200,
-            height: 25,
-          ),
-          activeIcon: SvgPicture.asset(
-            'assets/icons/user.svg',
-            height: 25,
-            color: tinderRed,
-          ),
-          label: '1',
-        ),
-      ],
     );
+  }
+
+  BottomNavigationBarItem buildNavigationItem(
+      {int value = 0, String icon, Color color}) {
+    return BottomNavigationBarItem(
+        icon: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/$icon.svg',
+              color: Colors.blueGrey.shade200,
+              height: 25,
+            ),
+            value != 0
+                ? Badge(value: value)
+                : Container(
+                    width: 0,
+                    height: 0,
+                  ),
+          ],
+        ),
+        activeIcon: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/$icon.svg',
+              color: color,
+              height: 25,
+            ),
+            value != 0
+                ? Badge(value: value)
+                : Container(
+                    width: 0,
+                    height: 0,
+                  ),
+          ],
+        ),
+        label: '1');
   }
 }
