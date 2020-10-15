@@ -9,7 +9,10 @@
 | Authentication with Google or Phone | Dart |
 | Swipe through user cards | Firebase Authentication |
 | Match with users | Cloud Firestore |
+| Upload Images | |
 | Chat | |
+| See who likes you | |
+| Unlock with Tinder Gold | |
 
 
 ## Screenshots
