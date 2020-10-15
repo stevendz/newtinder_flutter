@@ -1,16 +1,14 @@
-# newtinder
+## newTinder - Flutter Application
 
-A new Flutter project.
+| # Features implemented: | # Technologys used: |
+| --------------- | --------------- |
+| <img src='https://www.girlscoutsiowa.org/content/dam/girlscouts-girlscoutsiowa/images/miscellaneous/line.jpg' width='50%' height='1px'> | <img src='https://www.girlscoutsiowa.org/content/dam/girlscouts-girlscoutsiowa/images/miscellaneous/line.jpg' width='50%' height='1px'> |
+| Fully responsive | Flutter |
+| Authentication with Google or Phone | Dart |
+| Swipe through user cards | Firebase Authentication |
+| Match with users | Cloud Firestore |
+| Chat | |
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+<img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/slpash.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/rules.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/profile.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/profile.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/swipe_1.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/swipe_2.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/chats.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/chat.png?alt=media' width='33.33%'><img src='https://firebasestorage.googleapis.com/v0/b/newtinder-5ba54.appspot.com/o/matches.png?alt=media' width='33.33%'>
