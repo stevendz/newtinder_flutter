@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/buttons/button_colorful.dart';
+import 'package:newtinder/widgets/match/match_card.dart';
 
 class MatchesScreen extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: 10,
-                        horizontal: MediaQuery.of(context).size.width * 0.2),
+                        horizontal: MediaQuery.of(context).size.width * 0.25),
                     child: Text(
                       'Upgrade to Gold to see people who have already liked you.',
                       textAlign: TextAlign.center,
@@ -51,34 +52,15 @@ class _MatchesScreenState extends State<MatchesScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 0.75),
                         itemCount: users.length,
                         itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      users[index].data()['profilePic'],
-                                    ),
-                                    fit: BoxFit.cover),
-                              ),
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                  sigmaX: isTinderGold ? 0 : 3,
-                                  sigmaY: isTinderGold ? 0 : 3,
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          return MatchCard(
+                            match: users[index].data(),
+                            isTinderGold: isTinderGold,
                           );
                         },
                       ),
@@ -90,7 +72,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.2,
+                      vertical: 20,
+                    ),
                     child: ButtonColorful(
                       onPressed: () {
                         setState(() {

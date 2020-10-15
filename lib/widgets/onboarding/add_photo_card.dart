@@ -58,8 +58,8 @@ class AddPhotoCard extends StatelessWidget {
                         begin: Alignment.centerRight,
                         end: Alignment.centerLeft,
                         colors: [
-                          Color(0xffFF7759),
-                          Color(0xffFF427A),
+                          tinderOrange,
+                          tinderRed,
                         ],
                       )
                     : null,

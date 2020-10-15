@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 
 class ButtonColorful extends StatelessWidget {
   final Function onPressed;
@@ -11,8 +12,8 @@ class ButtonColorful extends StatelessWidget {
     @required this.title,
     this.elevation = 0,
     this.colors = const [
-      Color(0xffFF427A),
-      Color(0xffFF7759),
+      tinderRed,
+      tinderOrange,
     ],
   }) : super(key: key);
 

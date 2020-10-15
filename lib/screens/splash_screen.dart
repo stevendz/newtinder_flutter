@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/buttons/button_social_login.dart';
 import 'package:newtinder/widgets/logo/logo_with_text.dart';
 
@@ -20,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xffFF7759),
-              Color(0xffFF427A),
+              tinderOrange,
+              tinderRed,
             ],
           ),
         ),
