@@ -50,7 +50,7 @@ class _ChatScreenState extends State<ChatScreen> {
               leading: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
-                    color: Colors.redAccent,
+                    color: tinderRed,
                   ),
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -65,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.more_vert, color: Colors.redAccent),
+                  icon: Icon(Icons.more_vert, color: tinderRed),
                   onPressed: () {},
                 ),
               ],

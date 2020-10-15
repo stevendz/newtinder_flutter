@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newtinder/constants.dart';
 
 class TopNavigationBar extends StatefulWidget {
   final TabController tabController;
@@ -25,6 +26,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
+      elevation: 3,
       currentIndex: currentIndex,
       showSelectedLabels: false,
       showUnselectedLabels: false,
@@ -55,7 +57,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
             activeIcon: SvgPicture.asset(
               'assets/icons/diamond.svg',
               height: 25,
-              color: Colors.redAccent,
+              color: tinderRed,
             ),
             label: '1'),
         BottomNavigationBarItem(
@@ -67,7 +69,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
             activeIcon: SvgPicture.asset(
               'assets/icons/chat.svg',
               height: 25,
-              color: Colors.redAccent,
+              color: tinderRed,
             ),
             label: '1'),
         BottomNavigationBarItem(
@@ -79,7 +81,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
           activeIcon: SvgPicture.asset(
             'assets/icons/user.svg',
             height: 25,
-            color: Colors.redAccent,
+            color: tinderRed,
           ),
           label: '1',
         ),

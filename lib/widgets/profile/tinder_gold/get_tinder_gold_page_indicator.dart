@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 
 class GetTinderGoldPageIndicator extends StatelessWidget {
   const GetTinderGoldPageIndicator({
@@ -15,8 +16,7 @@ class GetTinderGoldPageIndicator extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 3,
-          backgroundColor:
-              currentIndex == 0 ? Colors.amberAccent.shade400 : Colors.grey,
+          backgroundColor: currentIndex == 0 ? tinderGoldLight : Colors.grey,
         ),
         SizedBox(width: 5),
         CircleAvatar(

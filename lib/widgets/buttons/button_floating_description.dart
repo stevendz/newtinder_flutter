@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newtinder/constants.dart';
 
 class ButtonFloatingDescription extends StatelessWidget {
   final bool big;
@@ -20,7 +21,7 @@ class ButtonFloatingDescription extends StatelessWidget {
       children: [
         FloatingActionButton(
           mini: !big,
-          backgroundColor: big ? Colors.redAccent : Colors.white,
+          backgroundColor: big ? tinderRed : Colors.white,
           elevation: 2,
           child: SvgPicture.asset(
             'assets/icons/$icon.svg',

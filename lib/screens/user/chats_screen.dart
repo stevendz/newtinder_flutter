@@ -19,15 +19,33 @@ class _ChatsScreenState extends State<ChatsScreen> {
         }
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> chats = snapshot.data.docs.toList();
-          return ListView.builder(
-            itemCount: chats.length,
-            itemBuilder: (context, index) {
-              return ChatListTile(
-                data: chats,
-                user: user,
-                index: index,
-              );
-            },
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 5),
+                child: Text(
+                  'Messages',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: tinderRed,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Divider(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: chats.length,
+                  itemBuilder: (context, index) {
+                    return ChatListTile(
+                      data: chats,
+                      user: user,
+                      index: index,
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         }
         return Material(child: Center(child: CircularProgressIndicator()));

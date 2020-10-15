@@ -35,7 +35,7 @@ class _ChatListTileState extends State<ChatListTile> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           Map chatPartner = snapshot.data.data();
-          return ListTile(
+          return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
@@ -47,11 +47,24 @@ class _ChatListTileState extends State<ChatListTile> {
                 ),
               );
             },
-            leading: CircleAvatar(
-              backgroundColor: Colors.grey.shade100,
-              backgroundImage: NetworkImage(chatPartner['profilePic']),
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundColor: Colors.grey.shade100,
+                    backgroundImage: NetworkImage(chatPartner['profilePic']),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    chatPartner['username'],
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
             ),
-            title: Text(chatPartner['username']),
           );
         }
         return Material(child: Center(child: CircularProgressIndicator()));

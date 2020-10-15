@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/profile/tinder_gold/get_tinder_gold_slide.dart';
 
 class GetTinderGoldSlider extends StatelessWidget {
@@ -26,7 +27,7 @@ class GetTinderGoldSlider extends StatelessWidget {
             icon: 'logo',
             title: 'Get Tinder Gold™',
             description: 'See who likes you & more!',
-            color: Colors.amberAccent.shade400,
+            color: tinderGoldLight,
           ),
           GetTinderGoldSlide(
             icon: 'thunder',

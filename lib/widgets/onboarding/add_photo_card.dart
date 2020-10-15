@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtinder/constants.dart';
 
 class AddPhotoCard extends StatelessWidget {
   final List photoPaths;
@@ -73,7 +74,7 @@ class AddPhotoCard extends StatelessWidget {
                         angle: math.pi / 12 * 45,
                         child: Icon(
                           Icons.add,
-                          color: Colors.redAccent,
+                          color: tinderRed,
                         ),
                       ),
               ),

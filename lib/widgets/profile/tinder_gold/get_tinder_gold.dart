@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newtinder/constants.dart';
 import 'package:newtinder/widgets/profile/tinder_gold/get_tinder_gold_page_indicator.dart';
 import 'package:newtinder/widgets/profile/tinder_gold/get_tinder_gold_slider.dart';
 
@@ -43,9 +44,7 @@ class _GetTinderGoldState extends State<GetTinderGold> {
                     ? 'Get tinder gold™'.toUpperCase()
                     : 'My tinder plus®'.toUpperCase(),
                 style: TextStyle(
-                  color: getTinderGold
-                      ? Colors.amberAccent.shade400
-                      : Colors.redAccent,
+                  color: getTinderGold ? tinderGold : tinderRed,
                 ),
               ),
             ),

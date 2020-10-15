@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newtinder/screens/user/chats_screen.dart';
+import 'package:newtinder/screens/user/matches_screen.dart';
 import 'package:newtinder/screens/user/profile_screen.dart';
 import 'package:newtinder/screens/user/swipe_screen.dart';
 import 'package:newtinder/widgets/home/top_navigation_bar.dart';
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen>
   TabController _tabController;
   List<Widget> screens = [
     SwipeScreen(),
-    Center(child: Text('2')),
+    MatchesScreen(),
     ChatsScreen(),
     ProfileScreen(),
   ];

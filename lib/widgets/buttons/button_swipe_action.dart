@@ -17,7 +17,7 @@ class ButtonSwipeAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: onPressed != null ? 1 : 0,
+      opacity: onPressed != null ? 1 : 0.25,
       child: FloatingActionButton(
         mini: !big,
         backgroundColor: Colors.white,

@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 class ButtonColorful extends StatelessWidget {
   final Function onPressed;
   final String title;
+  final double elevation;
+  final List<Color> colors;
   const ButtonColorful({
     Key key,
     @required this.onPressed,
     @required this.title,
+    this.elevation = 0,
+    this.colors = const [
+      Color(0xffFF427A),
+      Color(0xffFF7759),
+    ],
   }) : super(key: key);
 
   @override
@@ -22,18 +29,23 @@ class ButtonColorful extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            gradient: onPressed != null
-                ? LinearGradient(
-                    begin: Alignment.centerRight,
-                    end: Alignment.centerLeft,
-                    colors: [
-                      Color(0xffFF7759),
-                      Color(0xffFF427A),
-                    ],
-                  )
-                : null,
-            borderRadius: BorderRadius.circular(50)),
+          color: Colors.grey.shade200,
+          gradient: onPressed != null
+              ? LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: colors,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(50),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: elevation,
+              offset: Offset(0, elevation),
+              color: Colors.blueGrey.withOpacity(0.5),
+            ),
+          ],
+        ),
         child: Text(
           title.toUpperCase(),
           style: TextStyle(fontSize: 18, color: Colors.white),
