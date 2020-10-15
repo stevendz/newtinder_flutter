@@ -25,6 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageController = TextEditingController();
   bool showScrollDownButton = false;
   String chatPartnerImage = 'https://i.gifer.com/VLGA.gif';
+  String chatPartnerName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> messages = snapshot.data.docs.toList();
           if (chatPartnerImage == 'https://i.gifer.com/VLGA.gif') {
-            fetchChatPartnerImage();
+            fetchChatPartnerData();
           }
 
           return Scaffold(
@@ -54,13 +55,15 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   onPressed: () {
                     Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(index: 2)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(index: 2),
+                      ),
+                    );
                   }),
               centerTitle: true,
               title: Text(
-                'Team Tinder',
+                chatPartnerName,
                 style: TextStyle(color: Colors.black),
               ),
               actions: [
@@ -131,20 +134,21 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<void> fetchChatPartnerImage() async {
+  Future<void> fetchChatPartnerData() async {
     DocumentSnapshot chatPartnerData =
         await usersDb.doc(widget.chatPartnerUid).get();
     setState(() {
       chatPartnerImage = chatPartnerData.data()['profilePic'];
+      chatPartnerName = chatPartnerData.data()['username'];
     });
   }
 
   Future<void> sendMessage() async {
-    messageController.text;
     chatsDb.doc(widget.chatId).collection('messages').add({
       'message': messageController.text,
       'sender': user.uid,
       'timestamp': DateTime.now().millisecondsSinceEpoch
     });
+    messageController.text = '';
   }
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:newtinder/card/swipeable_card.dart';
 import 'package:newtinder/card/swipeable_widget.dart';
+import 'package:newtinder/constants.dart';
 
 class SwipeSection extends StatefulWidget {
   final List<QueryDocumentSnapshot> userData;
@@ -30,12 +31,14 @@ class _SwipeSectionState extends State<SwipeSection> {
     if (cards.isEmpty)
       widget.userData.forEach(
         (element) {
-          cards.add(
-            SwipeableCard(
-              image: element.data()['profilePic'],
-              text: element.data()['username'],
-            ),
-          );
+          if (element.id != user.uid) {
+            cards.add(
+              SwipeableCard(
+                image: element.data()['profilePic'],
+                text: element.data()['username'],
+              ),
+            );
+          }
         },
       );
     if (widget.currentCardIndex < cards.length) {
@@ -52,10 +55,11 @@ class _SwipeSectionState extends State<SwipeSection> {
             ),
         ],
         onLeftSwipe: () {
-          widget.swipeLeft(widget.userData[widget.currentCardIndex].id);
+          widget.swipeLeft(widget.userData[widget.currentCardIndex + 1].id);
         },
         onRightSwipe: () {
-          widget.swipeRight(uid: widget.userData[widget.currentCardIndex].id);
+          widget.swipeRight(
+              uid: widget.userData[widget.currentCardIndex + 1].id);
         },
       );
     } else {

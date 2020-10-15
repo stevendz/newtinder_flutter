@@ -44,7 +44,9 @@ class _SwipeScreenState extends State<SwipeScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
-                  child: SwipeActionsRow(cardController: _cardController),
+                  child: SwipeActionsRow(
+                    cardController: _cardController,
+                  ),
                 )
               ],
             ),
@@ -72,11 +74,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
       match = possibleMatch.data()['likes'].any((like) {
         return like == user.uid;
       });
-
-    print(match);
-    // var matches = possibleMatch.data()['likes'].where((element) {
-    //   return myLikes.any((like) => like == element.id);
-    // });
     if (match)
       showDialog(
         context: context,
